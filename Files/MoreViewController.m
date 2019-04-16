@@ -35,7 +35,7 @@
         self.homePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         // 创建一个目录
         [self.fileManager createFolderToFullPath:self.homePath];
-        self.title = @"总目录";
+        self.title = @"目录";
     } else {
         self.title = self.fileModel.name;
         self.homePath = self.fileModel.filePath;
@@ -105,6 +105,12 @@
             {
                 cell.sLabel.text = [NSString stringWithFormat:@"视频： %@ %@", file.creatTime, file.fileSize];
                 cell.imageV.image = [UIImage imageNamed:@"file_avi"];
+                [self getImageFromVideoSource:file.filePath complete:^(UIImage *image, NSString *path) {
+                    if ([file.filePath isEqual:path]) {
+                        cell.imageV.image = image;
+                        [cell setNeedsLayout];
+                    }
+                }];
             }
                 break;
             case ELFileTypeApplication:
@@ -189,17 +195,17 @@
         vc.fileModel = file;
         vc.homePath = file.filePath;
         [self.navigationController pushViewController:vc animated:YES];
-    } else if (file.fileType == ELFileTypeImage) {
+    } else if (file.fileType == ELFileTypeDmg) {
         UIDocumentInteractionController *documentVc = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:file.filePath]];
         documentVc.delegate = self;
         BOOL canOpen = [documentVc presentPreviewAnimated:YES];
+        documentVc.UTI = @"com.pkware.zip-archive";
         if (!canOpen) {
             [MessageView showMsg:@"文件类型不能打开分享"];
         }
     } else {
         UIDocumentInteractionController *documentVc = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:file.filePath]];
         documentVc.delegate = self;
-        documentVc.UTI = @"com.pkware.zip-archive";
         BOOL canOpen = [documentVc presentPreviewAnimated:YES];
         if (!canOpen) {
             [MessageView showMsg:@"文件类型不能打开分享"];
@@ -236,6 +242,7 @@
 
 #pragma mark - 私有
 - (void)initViews {
+
     UITableView *tv = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     tv.delegate = self;
     tv.dataSource = self;
@@ -246,6 +253,12 @@
     tv.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 5)];
     tv.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 5)];
     [self.view addSubview:tv];
+    if (@available(iOS 10, *)) {
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉刷新"];
+        [refreshControl addTarget:self action:@selector(getAllFile) forControlEvents:UIControlEventValueChanged];
+        tv.refreshControl = refreshControl;
+    }
     self.tv = tv;
 
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(addAction)];
@@ -256,6 +269,9 @@
         self.files = [NSMutableArray arrayWithArray:[self.fileManager getAllFileWithPath:self.homePath]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tv reloadData];
+            if (@available(iOS 10, *)) {
+                [self.tv.refreshControl endRefreshing];
+            }
         });
     });
 }
@@ -373,7 +389,7 @@
 }
 
 - (void)getImageFromImageSource:(NSString *)path complete:(void (^)(UIImage *image, NSString *path))success {
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    dispatch_global_async_safe_el(^{
         NSString *imagePath=[NSTemporaryDirectory() stringByAppendingFormat:@"/%@", [path lastPathComponent]];
         UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
         if (image) {
@@ -382,25 +398,28 @@
                     success(image, path);
                 });
             }
+            return;
         }
         CGImageSourceRef imageSource = NULL;
         CGImageRef thumbnail = NULL;
         imageSource = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath: [path stringByExpandingTildeInPath]], NULL);
         if (imageSource == NULL) {
             if (success) {
-                dispatch_async(dispatch_get_main_queue(), ^{
+                dispatch_main_async_safe_el(^{
                     success(nil, path);
                 });
             }
+            return;
         }
         CFStringRef imageSourceType = CGImageSourceGetType(imageSource);
         if (imageSourceType == NULL) {
             CFRelease(imageSource);
             if (success) {
-                dispatch_async(dispatch_get_main_queue(), ^{
+                dispatch_main_async_safe_el(^{
                     success(nil, path);
                 });
             }
+            return;
         }
         CFRelease(imageSourceType);
         NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -412,36 +431,48 @@
         UIImage *imageResult=[UIImage imageWithCGImage:thumbnail];
         [UIImageJPEGRepresentation(imageResult, 1) writeToFile:imagePath atomically:YES];
         if (success) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_main_async_safe_el(^{
                 success(imageResult, path);
             });
         }
     });
 }
-
-+(UIImage *)getThumbnailImage:(NSString *)videoPath {
+- (void)getImageFromVideoSource:(NSString *)videoPath complete:(void (^)(UIImage *image, NSString *path))success {
     if (videoPath) {
-        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath: videoPath] options:nil];
-        AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-        // 设定缩略图的方向
-        // 如果不设定，可能会在视频旋转90/180/270°时，获取到的缩略图是被旋转过的，而不是正向的
-        gen.appliesPreferredTrackTransform = YES;
-        // 设置图片的最大size(分辨率)
-        gen.maximumSize = CGSizeMake(300, 169);
-        CMTime time = CMTimeMakeWithSeconds(5.0, 600); //取第5秒，一秒钟600帧
-        NSError *error = nil;
-        CMTime actualTime;
-        CGImageRef image = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
-        if (error) {
-            UIImage *placeHoldImg = [UIImage imageNamed:@"posters_default_horizontal"];
-            return placeHoldImg;
-        }
-        UIImage *thumb = [[UIImage alloc] initWithCGImage:image];
-        CGImageRelease(image);
-        return thumb;
-    } else {
-        UIImage *placeHoldImg = [UIImage imageNamed:@"posters_default_horizontal"];
-        return placeHoldImg;
+        dispatch_global_async_safe_el(^{
+            NSString *imagePath=[NSTemporaryDirectory() stringByAppendingFormat:@"/%@", [videoPath lastPathComponent]];
+            UIImage *cacheImage = [UIImage imageWithContentsOfFile:imagePath];
+            if (cacheImage) {
+                if (success) {
+                    dispatch_main_async_safe_el(^{
+                        success(cacheImage, videoPath);
+                    });
+                }
+                return;
+            }
+            AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath: videoPath] options:nil];
+            AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+            // 设定缩略图的方向
+            // 如果不设定，可能会在视频旋转90/180/270°时，获取到的缩略图是被旋转过的，而不是正向的
+            gen.appliesPreferredTrackTransform = YES;
+            // 设置图片的最大size(分辨率)
+            gen.maximumSize = CGSizeMake(300, 169);
+            CMTime time = CMTimeMakeWithSeconds(5.0, 600); //取第5秒，一秒钟600帧
+            NSError *error = nil;
+            CMTime actualTime;
+            CGImageRef image = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+            if (error) {
+                return;
+            }
+            UIImage *thumb = [[UIImage alloc] initWithCGImage:image];
+            [UIImageJPEGRepresentation(thumb, 1) writeToFile:imagePath atomically:YES];
+            CGImageRelease(image);
+            if (success) {
+                dispatch_main_async_safe_el(^{
+                    success(thumb, videoPath);
+                });
+            }
+        });
     }
 }
 

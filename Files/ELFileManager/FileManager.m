@@ -51,7 +51,7 @@ static id instance = nil;
         [files addObject:file];
     }
     NSArray *sorts = [files sortedArrayUsingComparator:^NSComparisonResult(FileModel *  _Nonnull obj1, FileModel *  _Nonnull obj2) {
-        if (obj1.fileType==ELFileTypeDirectory&&obj1.fileType==ELFileTypeDirectory) {
+        if (obj1.fileType==ELFileTypeDirectory&&obj2.fileType==ELFileTypeDirectory) {
             return [obj2.creatTime compare:obj1.creatTime];
         } else if (obj2.fileType==ELFileTypeDirectory) {
             return YES;
