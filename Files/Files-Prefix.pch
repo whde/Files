@@ -1,0 +1,83 @@
+//
+//  Files-pch.h
+//  Files
+//
+//  Created by Whde on 2019/4/16.
+//  Copyright © 2019 Whde. All rights reserved.
+//
+
+#ifndef Files_pch_h
+#define Files_pch_h
+
+#import "DispatchSafe.h"
+
+#define RGBA(r, g, b, a) \
+[UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+
+#pragma mark -
+/****************************************************************/
+/**
+ *  屏幕寛高
+ */
+#define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT  [[UIScreen mainScreen] bounds].size.height
+#define COORDINATE_x_SCALE(x) (SCREEN_WIDTH*x/375.0)
+#define COORDINATE_X_SCALE_CEIL(x) ceil(SCREEN_WIDTH*x/375.0)
+#define COORDINATE_y_SCALE(y) ceil(SCREEN_HEIGHT*y/667.0)
+#pragma mark -
+/****************************************************************/
+/**
+ *  判断屏幕尺寸
+ */
+#define def_currentMode_size [[UIScreen mainScreen] currentMode].size
+#define def_currentMode_equal(width, height) \
+CGSizeEqualToSize(CGSizeMake(width, height), def_currentMode_size)
+#define iPhoneX     def_currentMode_equal(1125, 2436)
+#define iPhoneXR    def_currentMode_equal(828,  1792)
+#define iPhoneXS    def_currentMode_equal(1125, 2436)
+#define iPhoneXSMax def_currentMode_equal(1242, 2688)
+#define iPhone6Plus def_currentMode_equal(1242, 2208)
+#define iPhone6     def_currentMode_equal(750,  1334)
+#define iPhone5     def_currentMode_equal(640,  1136)
+#define iPhone4     def_currentMode_equal(640,  960)
+
+#pragma mark -
+/****************************************************************/
+/**
+ *  系统版本
+ */
+#define def_currentDevice_systemVersion \
+[[[UIDevice currentDevice] systemVersion] intValue]
+#define IS_IOS6   (def_currentDevice_systemVersion == 6)
+#define IS_IOS7   (def_currentDevice_systemVersion == 7)
+#define IS_IOS8   (def_currentDevice_systemVersion == 8)
+#define IS_IOS9   (def_currentDevice_systemVersion == 9)
+#define IS_IOS10  (def_currentDevice_systemVersion == 10)
+#define IS_IOS11  (def_currentDevice_systemVersion == 11)
+#define IS_IOS12  (def_currentDevice_systemVersion == 12)
+
+#define IS_VAILABLE_IOS6   (def_currentDevice_systemVersion >= 6)
+#define IS_VAILABLE_IOS7   (def_currentDevice_systemVersion >= 7)
+#define IS_VAILABLE_IOS8   (def_currentDevice_systemVersion >= 8)
+#define IS_VAILABLE_IOS9   (def_currentDevice_systemVersion >= 9)
+#define IS_VAILABLE_IOS10  (def_currentDevice_systemVersion >= 10)
+#define IS_VAILABLE_IOS11  (def_currentDevice_systemVersion >= 11)
+#define IS_VAILABLE_IOS12  (def_currentDevice_systemVersion >= 12)
+
+#define def_userInterfaceIdiom [[UIDevice currentDevice] userInterfaceIdiom]
+#define IS_iPad     def_userInterfaceIdiom == UIUserInterfaceIdiomPad
+#define IS_iPhone   def_userInterfaceIdiom == UIUserInterfaceIdiomPhone
+
+// 刘海
+#define def_Bang (iPhoneX || iPhoneXR || iPhoneXS || iPhoneXSMax)
+// 状态栏高度
+#define STATUS_BAR_HEIGHT (def_Bang ? 44.f : 20.f)
+// 导航栏高度
+#define NAVIGATION_BAR_HEIGHT (def_Bang ? 88.f : 64.f)
+// tabBar高度
+#define TAB_BAR_HEIGHT (def_Bang ? (49.f+34.f) : 49.f)
+// home indicator
+#define HOME_INDICATOR_HEIGHT (def_Bang ? 34.f : 0.f)
+
+
+#endif /* Files_pch_h */
