@@ -282,7 +282,7 @@
     UIAlertAction *createFolderAction = [UIAlertAction actionWithTitle:@"添加一个文件夹" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         int num = arc4random() % 100;
-        NSString *name = [NSString stringWithFormat:@"新建的文件夹--%d", num];
+        NSString *name = [NSString stringWithFormat:@"新建的文件夹%d", num];
         if ([self.fileManager createFolderToPath:self.homePath folderName:name]) {
             [self getAllFile];
         } else {
