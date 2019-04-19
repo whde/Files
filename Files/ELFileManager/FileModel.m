@@ -9,25 +9,25 @@
 #import "FileModel.h"
 
 static const UInt8 IMAGES_TYPES_COUNT = 4;
-static const UInt8 TEXT_TYPES_COUNT = 1;
+static const UInt8 TEXT_TYPES_COUNT = 2;
 static const UInt8 VIOCEVIDIO_COUNT = 7;
 static const UInt8 Application_count = 3;
 static const UInt8 AV_COUNT = 7;
-static const UInt8 DOC_TYPES_COUNT = 2;
-static const UInt8 XLS_TYPES_COUNT = 2;
-static const UInt8 PPT_TYPES_COUNT = 1;
+static const UInt8 DOC_TYPES_COUNT = 3;
+static const UInt8 XLS_TYPES_COUNT = 4;
+static const UInt8 PPT_TYPES_COUNT = 3;
 static const UInt8 PDF_TYPES_COUNT = 1;
 static const UInt8 ZIP_TYPES_COUNT = 3;
 static const UInt8 DMG_TYPES_COUNT = 3;
 
 static const NSString *IMAGES_TYPES[IMAGES_TYPES_COUNT] = {@"png", @"jpg", @"jpeg" ,@"gif"};
-static const NSString *TEXT_TYPES[TEXT_TYPES_COUNT] = {@"txt"};
+static const NSString *TEXT_TYPES[TEXT_TYPES_COUNT] = {@"txt", @"md"};
 static const NSString *VIOCEVIDIO_TYPES[VIOCEVIDIO_COUNT] = {@"mp3",@"wav",@"cd",@"ogg",@"midi",@"vqf",@"amr"};
 static const NSString *AV_TYPES[AV_COUNT] = {@"asf",@"wma",@"rm",@"rmvb",@"avi",@"mkv",@"mp4"};
 static const NSString *Application_types[Application_count] = {@"apk",@"ipa",@"pkg"};
-static const NSString *DOC_TYPES[DOC_TYPES_COUNT] = {@"doc",@"docx"};
-static const NSString *XLS_TYPES[XLS_TYPES_COUNT] = {@"xls", @"xlsx"};
-static const NSString *PPT_TYPES[PPT_TYPES_COUNT] = {@"ppt"};
+static const NSString *DOC_TYPES[DOC_TYPES_COUNT] = {@"doc",@"docx",@"pages"};
+static const NSString *XLS_TYPES[XLS_TYPES_COUNT] = {@"xls", @"xlsx", @"csv",@"numbers"};
+static const NSString *PPT_TYPES[PPT_TYPES_COUNT] = {@"ppt", @"pptx",@"keynote"};
 static const NSString *PDF_TYPES[PDF_TYPES_COUNT] = {@"pdf"};
 static const NSString *ZIP_TYPES[ZIP_TYPES_COUNT] = {@"zip",@"xip",@"rar"};
 static const NSString *DMG_TYPES[DMG_TYPES_COUNT] = {@"dmg",@"iso",@"ipsw"};
@@ -105,7 +105,7 @@ static const NSString *DMG_TYPES[DMG_TYPES_COUNT] = {@"dmg",@"iso",@"ipsw"};
             } else if (self.fileSizefloat >= pow(10, 3)) { // 1MB > size >= 1KB
                 self.fileSize = [NSString stringWithFormat:@"%.2fKB", self.fileSizefloat / pow(10, 3)];
             } else { // 1KB > size
-                self.fileSize = [NSString stringWithFormat:@"%fB", self.fileSizefloat];
+                self.fileSize = [NSString stringWithFormat:@"%.0fB", self.fileSizefloat];
             }
         } else {
             self.fileSize = @"0 B";

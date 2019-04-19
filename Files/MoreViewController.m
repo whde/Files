@@ -78,8 +78,7 @@
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
         switch (file.fileType) {
-            case ELFileTypeImage:
-            {
+            case ELFileTypeImage: {
                 cell.sLabel.text = [NSString stringWithFormat:@"图片： %@ %@", file.creatTime, file.fileSize];
                 [self getImageFromImageSource:file.filePath complete:^(UIImage *image, NSString *path) {
                     if ([file.filePath isEqual:path]) {
@@ -87,22 +86,19 @@
                         [cell setNeedsLayout];
                     }
                 }];
-            }
                 break;
-            case ELFileTypeTxt:
-            {
+            }
+            case ELFileTypeTxt: {
                 cell.sLabel.text = [NSString stringWithFormat:@"文档： %@ %@", file.creatTime, file.fileSize];
                 cell.imageV.image = [UIImage imageNamed:@"file_txt"];
-            }
                 break;
-            case ELFileTypeVoice:
-            {
+            }
+            case ELFileTypeVoice: {
                 cell.sLabel.text = [NSString stringWithFormat:@"音乐： %@ %@", file.creatTime, file.fileSize];
                 cell.imageV.image = [UIImage imageNamed:@"file_mp3"];
-            }
                 break;
-            case ELFileTypeAudioVidio:
-            {
+            }
+            case ELFileTypeAudioVidio: {
                 cell.sLabel.text = [NSString stringWithFormat:@"视频： %@ %@", file.creatTime, file.fileSize];
                 cell.imageV.image = [UIImage imageNamed:@"file_avi"];
                 [self getImageFromVideoSource:file.filePath complete:^(UIImage *image, NSString *path) {
@@ -111,10 +107,9 @@
                         [cell setNeedsLayout];
                     }
                 }];
-            }
                 break;
-            case ELFileTypeApplication:
-            {
+            }
+            case ELFileTypeApplication: {
                 cell.sLabel.text = [NSString stringWithFormat:@"应用： %@ %@", file.creatTime, file.fileSize];
                 if ([file.filePath.pathExtension.lowercaseString isEqual:@"apk"]) {
                     cell.imageV.image = [UIImage imageNamed:@"apk"];
@@ -123,40 +118,46 @@
                 } else if ([file.filePath.pathExtension.lowercaseString isEqual:@"pkg"]) {
                     cell.imageV.image = [UIImage imageNamed:@"pkg"];
                 }
-            }
                 break;
-            case ELFileTypeUnknown:
-            {
+            }
+            case ELFileTypeUnknown: {
                 cell.sLabel.text = [NSString stringWithFormat:@"未知文件： %@ %@", file.creatTime, file.fileSize];
                 cell.imageV.image = [UIImage imageNamed:@"file_webView_error"];
-            }
                 break;
-            case ELFileTypeWord:
-            {
+            }
+            case ELFileTypeWord: {
                 cell.sLabel.text = [NSString stringWithFormat:@"word： %@ %@", file.creatTime, file.fileSize];
-                cell.imageV.image = [UIImage imageNamed:@"file_word"];
-            }
+                if ([file.filePath.pathExtension.lowercaseString isEqual:@"pages"]) {
+                    cell.imageV.image = [UIImage imageNamed:@"pages"];
+                } else {
+                    cell.imageV.image = [UIImage imageNamed:@"file_word"];
+                }
                 break;
-            case ELFileTypePDF:
-            {
+            }
+            case ELFileTypePDF: {
                 cell.sLabel.text = [NSString stringWithFormat:@"pdf： %@ %@", file.creatTime, file.fileSize];
                 cell.imageV.image = [UIImage imageNamed:@"file_pdf"];
-            }
                 break;
-            case ELFileTypePPT:
-            {
+            }
+            case ELFileTypePPT: {
                 cell.sLabel.text = [NSString stringWithFormat:@"ppt： %@ %@", file.creatTime, file.fileSize];
-                cell.imageV.image = [UIImage imageNamed:@"file_ppt"];
-            }
+                if ([file.filePath.pathExtension.lowercaseString isEqual:@"keynote"]) {
+                    cell.imageV.image = [UIImage imageNamed:@"keynote"];
+                } else {
+                    cell.imageV.image = [UIImage imageNamed:@"file_ppt"];
+                }
                 break;
-            case ELFileTypeXLS:
-            {
+            }
+            case ELFileTypeXLS: {
                 cell.sLabel.text = [NSString stringWithFormat:@"xls： %@ %@", file.creatTime, file.fileSize];
-                cell.imageV.image = [UIImage imageNamed:@"file_excel"];
-            }
+                if ([file.filePath.pathExtension.lowercaseString isEqual:@"numbers"]) {
+                    cell.imageV.image = [UIImage imageNamed:@"numbers"];
+                } else {
+                    cell.imageV.image = [UIImage imageNamed:@"file_excel"];
+                }
                 break;
-            case ELFileTypeZip:
-            {
+            }
+            case ELFileTypeZip: {
                 cell.sLabel.text = [NSString stringWithFormat:@"压缩文件： %@ %@", file.creatTime, file.fileSize];
                 if ([file.filePath.pathExtension.lowercaseString isEqual:@"zip"]) {
                     cell.imageV.image = [UIImage imageNamed:@"zip"];
@@ -165,10 +166,9 @@
                 } else if ([file.filePath.pathExtension.lowercaseString isEqual:@"rar"]) {
                     cell.imageV.image = [UIImage imageNamed:@"rar"];
                 }
-            }
                 break;
-            case ELFileTypeDmg:
-            {
+            }
+            case ELFileTypeDmg: {
                 cell.sLabel.text = [NSString stringWithFormat:@"磁盘镜像： %@ %@", file.creatTime, file.fileSize];
                 if ([file.filePath.pathExtension.lowercaseString isEqual:@"dmg"]) {
                     cell.imageV.image = [UIImage imageNamed:@"dmg"];
@@ -177,8 +177,8 @@
                 } else if ([file.filePath.pathExtension.lowercaseString isEqual:@"ipsw"]) {
                     cell.imageV.image = [UIImage imageNamed:@"ipsw"];
                 }
-            }
                 break;
+            }
             default:
                 break;
         }
@@ -195,11 +195,11 @@
         vc.fileModel = file;
         vc.homePath = file.filePath;
         [self.navigationController pushViewController:vc animated:YES];
-    } else if (file.fileType == ELFileTypeDmg) {
+    } else if (file.fileType == ELFileTypeDmg || file.fileType == ELFileTypeUnknown || file.fileType == ELFileTypeApplication) {
         UIDocumentInteractionController *documentVc = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:file.filePath]];
         documentVc.delegate = self;
+        documentVc.UTI = @"public.archive";
         BOOL canOpen = [documentVc presentPreviewAnimated:YES];
-        documentVc.UTI = @"com.pkware.zip-archive";
         if (!canOpen) {
             [MessageView showMsg:@"文件类型不能打开分享"];
         }
@@ -261,7 +261,7 @@
     }
     self.tv = tv;
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(addAction)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAction)];
 }
 
 - (void)getAllFile {
@@ -277,34 +277,17 @@
 }
 
 - (void)addAction {
-    UIAlertController *actionSheetController = [UIAlertController alertControllerWithTitle:nil message:@"操作" preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *createFolderAction = [UIAlertAction actionWithTitle:@"添加一个文件夹" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        int num = arc4random() % 100;
-        NSString *name = [NSString stringWithFormat:@"新建的文件夹%d", num];
-        if ([self.fileManager createFolderToPath:self.homePath folderName:name]) {
-            [self getAllFile];
-        } else {
-            NSLog(@"创建失败");
-        }
-        
-    }];
-    UIAlertAction *searchAction = [UIAlertAction actionWithTitle:@"搜索“的”字文件" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        NSArray *resFiles = [self.fileManager searchDeepFile:@"的" folderPath:self.homePath];
-        for (FileModel *file in resFiles) {
-            NSLog(@"%@", file.name);
-        }
-    }];
-    
-    // 添加响应方式
-    [actionSheetController addAction:createFolderAction];
-    [actionSheetController addAction:searchAction];
-    [actionSheetController addAction:cancelAction];
-    
-    // 显示
-    [self presentViewController:actionSheetController animated:YES completion:nil];
+    int num = arc4random() % 100;
+    NSString *name = [NSString stringWithFormat:@"新建的文件夹%d", num];
+    if ([self.fileManager createFolderToPath:self.homePath folderName:name]) {
+        [self getAllFile];
+    } else {
+        NSLog(@"创建失败");
+    }
+//    NSArray *resFiles = [self.fileManager searchDeepFile:@"的" folderPath:self.homePath];
+//    for (FileModel *file in resFiles) {
+//        NSLog(@"%@", file.name);
+//    }
 }
 
 - (void)cellLongPress:(UILongPressGestureRecognizer *)longRecognizer {
