@@ -19,7 +19,6 @@
 		DED1CCA31F905E5300AD8BB5 /* FileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DED1CC9F1F905E4600AD8BB5 /* FileManager.m */; };
 		DED1CCA41F905E5900AD8BB5 /* FileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DED1CCA11F905E4600AD8BB5 /* FileModel.m */; };
 		F334C4FC1FC6B45300FFEFD3 /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F334C4F71FC6B45200FFEFD3 /* MoreViewController.m */; };
-		F334C4FD1FC6B45300FFEFD3 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F334C4F81FC6B45200FFEFD3 /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,9 +47,7 @@
 		DED1CCA01F905E4600AD8BB5 /* FileModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileModel.h; sourceTree = "<group>"; };
 		DED1CCA11F905E4600AD8BB5 /* FileModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileModel.m; sourceTree = "<group>"; };
 		F334C4F21FC6B45200FFEFD3 /* MoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
-		F334C4F61FC6B45200FFEFD3 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		F334C4F71FC6B45200FFEFD3 /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
-		F334C4F81FC6B45200FFEFD3 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +100,6 @@
 			children = (
 				DE6EC0D51F905B68001FFBA3 /* AppDelegate.h */,
 				DE6EC0D61F905B68001FFBA3 /* AppDelegate.m */,
-				F334C4F61FC6B45200FFEFD3 /* MainViewController.h */,
-				F334C4F81FC6B45200FFEFD3 /* MainViewController.m */,
 				F334C4F21FC6B45200FFEFD3 /* MoreViewController.h */,
 				F334C4F71FC6B45200FFEFD3 /* MoreViewController.m */,
 				4C41232C226571DB00C9F4E9 /* MoreTableViewCell.h */,
@@ -210,7 +205,6 @@
 			files = (
 				4C4123342265CCAC00C9F4E9 /* MessageView.m in Sources */,
 				DED1CCA41F905E5900AD8BB5 /* FileModel.m in Sources */,
-				F334C4FD1FC6B45300FFEFD3 /* MainViewController.m in Sources */,
 				DED1CCA31F905E5300AD8BB5 /* FileManager.m in Sources */,
 				4C41232F226571DB00C9F4E9 /* MoreTableViewCell.m in Sources */,
 				DE6EC0E51F905B68001FFBA3 /* main.m in Sources */,

@@ -7,33 +7,17 @@
 //
 
 #import "FileModel.h"
-
-static const UInt8 IMAGES_TYPES_COUNT = 4;
-static const UInt8 TEXT_TYPES_COUNT = 2;
-static const UInt8 VIOCEVIDIO_COUNT = 7;
-static const UInt8 Application_count = 3;
-static const UInt8 AV_COUNT = 7;
-static const UInt8 DOC_TYPES_COUNT = 3;
-static const UInt8 XLS_TYPES_COUNT = 4;
-static const UInt8 PPT_TYPES_COUNT = 3;
-static const UInt8 PDF_TYPES_COUNT = 1;
-static const UInt8 ZIP_TYPES_COUNT = 3;
-static const UInt8 DMG_TYPES_COUNT = 3;
-
-static const NSString *IMAGES_TYPES[IMAGES_TYPES_COUNT] = {@"png", @"jpg", @"jpeg" ,@"gif"};
-static const NSString *TEXT_TYPES[TEXT_TYPES_COUNT] = {@"txt", @"md"};
-static const NSString *VIOCEVIDIO_TYPES[VIOCEVIDIO_COUNT] = {@"mp3",@"wav",@"cd",@"ogg",@"midi",@"vqf",@"amr"};
-static const NSString *AV_TYPES[AV_COUNT] = {@"asf",@"wma",@"rm",@"rmvb",@"avi",@"mkv",@"mp4"};
-static const NSString *Application_types[Application_count] = {@"apk",@"ipa",@"pkg"};
-static const NSString *DOC_TYPES[DOC_TYPES_COUNT] = {@"doc",@"docx",@"pages"};
-static const NSString *XLS_TYPES[XLS_TYPES_COUNT] = {@"xls", @"xlsx", @"csv",@"numbers"};
-static const NSString *PPT_TYPES[PPT_TYPES_COUNT] = {@"ppt", @"pptx",@"keynote"};
-static const NSString *PDF_TYPES[PDF_TYPES_COUNT] = {@"pdf"};
-static const NSString *ZIP_TYPES[ZIP_TYPES_COUNT] = {@"zip",@"xip",@"rar"};
-static const NSString *DMG_TYPES[DMG_TYPES_COUNT] = {@"dmg",@"iso",@"ipsw"};
-
-//@interface ELFileModel()
-//@end
+static const NSString *IMAGES_TYPES = @"png jpg jpeg gif tiff";
+static const NSString *TEXT_TYPES = @"txt md sh";
+static const NSString *VIOCEVIDIO_TYPES = @"mp3 wav cd ogg midi vqf amr";
+static const NSString *AV_TYPES = @"asf wma rm rmvb avi mkv mp4";
+static const NSString *Application_types = @"apk ipa pkg";
+static const NSString *DOC_TYPES = @"doc docx pages";
+static const NSString *XLS_TYPES = @"xls xlsx csv numbers";
+static const NSString *PPT_TYPES = @"ppt pptx keynote";
+static const NSString *PDF_TYPES = @"pdf";
+static const NSString *ZIP_TYPES = @"zip xip rar";
+static const NSString *DMG_TYPES = @"dmg iso ipsw";
 
 @implementation FileModel {
     NSFileManager *fileMgr;
@@ -144,56 +128,45 @@ static const NSString *DMG_TYPES[DMG_TYPES_COUNT] = {@"dmg",@"iso",@"ipsw"};
 // 通过后缀获得类型
 - (ELFileType)judgeType:(NSString *)pathExtension {
     pathExtension = pathExtension.lowercaseString;
-    NSArray *imageTypesArray = [NSArray arrayWithObjects: IMAGES_TYPES count: IMAGES_TYPES_COUNT];
-    if ([imageTypesArray containsObject:pathExtension]) {
+    if ([IMAGES_TYPES rangeOfString:pathExtension].location!=NSNotFound) {
         return ELFileTypeImage;
     }
     
-    NSArray *textTypesArray = [NSArray arrayWithObjects: TEXT_TYPES count: TEXT_TYPES_COUNT];
-    if ([textTypesArray containsObject:pathExtension]) {
+    if ([TEXT_TYPES rangeOfString:pathExtension].location!=NSNotFound) {
         return ELFileTypeTxt;
     }
     
-    NSArray *viceViodeArray = [NSArray arrayWithObjects: VIOCEVIDIO_TYPES count: VIOCEVIDIO_COUNT];
-    if ([viceViodeArray containsObject:pathExtension]) {
+    if ([VIOCEVIDIO_TYPES rangeOfString:pathExtension].location!=NSNotFound) {
         return ELFileTypeVoice;
     }
     
-    NSArray *appViodeArray = [NSArray arrayWithObjects: Application_types count: Application_count];
-    if ([appViodeArray containsObject:pathExtension]) {
+    if ([Application_types rangeOfString:pathExtension].location!=NSNotFound) {
         return ELFileTypeApplication;
     }
     
-    NSArray *AVArray = [NSArray arrayWithObjects: AV_TYPES count: AV_COUNT];
-    if ([AVArray containsObject:pathExtension]) {
+    if ([AV_TYPES rangeOfString:pathExtension].location!=NSNotFound) {
         return ELFileTypeAudioVidio;
     }
     
-    NSArray *DOCArray = [NSArray arrayWithObjects: DOC_TYPES count: DOC_TYPES_COUNT];
-    if ([DOCArray containsObject:pathExtension]) {
+    if ([DOC_TYPES rangeOfString:pathExtension].location!=NSNotFound) {
         return ELFileTypeWord;
     }
     
-    NSArray *XLSArray = [NSArray arrayWithObjects: XLS_TYPES count: XLS_TYPES_COUNT];
-    if ([XLSArray containsObject:pathExtension]) {
+    if ([XLS_TYPES rangeOfString:pathExtension].location!=NSNotFound) {
         return ELFileTypeXLS;
     }
     
-    NSArray *PDFArray = [NSArray arrayWithObjects: PDF_TYPES count: PDF_TYPES_COUNT];
-    if ([PDFArray containsObject:pathExtension]) {
+    if ([PDF_TYPES rangeOfString:pathExtension].location!=NSNotFound) {
         return ELFileTypePDF;
     }
     
-    NSArray *PPTArray = [NSArray arrayWithObjects: PPT_TYPES count: PPT_TYPES_COUNT];
-    if ([PPTArray containsObject:pathExtension]) {
+    if ([PPT_TYPES rangeOfString:pathExtension].location!=NSNotFound) {
         return ELFileTypePPT;
     }
-    NSArray *ZIPArray = [NSArray arrayWithObjects: ZIP_TYPES count: ZIP_TYPES_COUNT];
-    if ([ZIPArray containsObject:pathExtension]) {
+    if ([ZIP_TYPES rangeOfString:pathExtension].location!=NSNotFound) {
         return ELFileTypeZip;
     }
-    NSArray *DMGArray = [NSArray arrayWithObjects: DMG_TYPES count: DMG_TYPES_COUNT];
-    if ([DMGArray containsObject:pathExtension]) {
+    if ([DMG_TYPES rangeOfString:pathExtension].location!=NSNotFound) {
         return ELFileTypeDmg;
     }
 
