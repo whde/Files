@@ -23,4 +23,10 @@
     [self.window makeKeyAndVisible];
     return YES;
 }
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    NSString *path = [url absoluteString];
+    path = [path stringByRemovingPercentEncoding];
+    NSLog(@"%@", path);
+    return YES;
+}
 @end

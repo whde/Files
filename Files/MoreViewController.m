@@ -12,6 +12,8 @@
 #import "MoreTableViewCell.h"
 #import "MsgView/MessageView.h"
 #import <QuickLook/QuickLook.h>
+#import "WiFiViewController.h"
+
 @interface MoreViewController () <UITableViewDelegate, UITableViewDataSource, UIDocumentInteractionControllerDelegate>
 @property (nonatomic, strong) NSMutableArray *files;
 @property (nonatomic, strong) FileManager *fileManager;
@@ -262,6 +264,26 @@
     self.tv = tv;
 
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAction)];
+    UIButton * btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    [btn setTitle:@"WiFi" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(wifi) forControlEvents:UIControlEventTouchUpInside];
+    [btn sizeToFit];
+    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = item;
+}
+
+- (void)wifi {
+    WiFiViewController *wifiVC = [[WiFiViewController alloc] init];
+    [UIView transitionWithView:self.navigationController.view duration:0.3 options:UIViewAnimationOptionCurveLinear animations:^{
+        CATransition* transition = [CATransition animation];
+        transition.duration =0.0f;
+        transition.type = kCATransitionPush;
+        transition.subtype = kCATransitionFromLeft;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionLinear];
+        [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+        [self.navigationController pushViewController:wifiVC animated:YES];
+    } completion:nil];
+
 }
 
 - (void)getAllFile {
