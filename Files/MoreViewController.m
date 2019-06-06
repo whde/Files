@@ -38,7 +38,7 @@
         self.homePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         // 创建一个目录
         [self.fileManager createFolderToFullPath:self.homePath];
-        self.title = @"目录";
+        self.title = @"Document";
     } else {
         self.title = self.fileModel.name;
         self.homePath = self.fileModel.filePath;
@@ -52,7 +52,7 @@
     [self getAllFile];
 }
 
-#pragma mark - tableView 代理数据源
+#pragma mark - tableView
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -249,7 +249,7 @@
     }
 }
 
-#pragma mark - 对控件权限进行设置
+#pragma mark -
 - (BOOL)canBecomeFirstResponder {
     return YES;
 }
@@ -260,7 +260,7 @@
     return NO;
 }
 
-#pragma mark - 私有
+#pragma mark -
 - (void)initViews {
 
     UITableView *tv = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
@@ -510,7 +510,7 @@
     }
 }
 
-#pragma mark - lazy
+#pragma mark -
 - (NSMutableArray *)files {
     if (!_files) {
         _files = [NSMutableArray array];
@@ -518,7 +518,7 @@
     return _files;
 }
 
-#pragma mark - UIDocumentInteractionController 代理方法
+#pragma mark -
 - (UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller {
     return self;
 }
