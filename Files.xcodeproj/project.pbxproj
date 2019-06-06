@@ -12,9 +12,8 @@
 		4C4123342265CCAC00C9F4E9 /* MessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4123332265CCAC00C9F4E9 /* MessageView.m */; };
 		4C4123382265CD2700C9F4E9 /* DispatchSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4123372265CD2700C9F4E9 /* DispatchSafe.m */; };
 		4C41233C2265D73300C9F4E9 /* File.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C41233E2265D73300C9F4E9 /* File.strings */; };
-		4C9767C022A7AEF500A9BDBA /* SSIDAndPhoneIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9767BA22A7AEF400A9BDBA /* SSIDAndPhoneIP.m */; };
 		4C9767C222A7AEF500A9BDBA /* WiFiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9767BE22A7AEF500A9BDBA /* WiFiManager.m */; };
-		4C9767D522A8AFA300A9BDBA /* SJXCSMIPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9767D322A8AFA300A9BDBA /* SJXCSMIPHelper.m */; };
+		4C9767D522A8AFA300A9BDBA /* IPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9767D322A8AFA300A9BDBA /* IPHelper.m */; };
 		DE6EC0D71F905B68001FFBA3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DE6EC0D61F905B68001FFBA3 /* AppDelegate.m */; };
 		DE6EC0DF1F905B68001FFBA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE6EC0DE1F905B68001FFBA3 /* Assets.xcassets */; };
 		DE6EC0E21F905B68001FFBA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE6EC0E01F905B68001FFBA3 /* LaunchScreen.storyboard */; };
@@ -55,12 +54,10 @@
 		4C4123402265D77C00C9F4E9 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/File.strings"; sourceTree = "<group>"; };
 		4C4123412265D7D000C9F4E9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		4C4123422265D7D000C9F4E9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/File.strings"; sourceTree = "<group>"; };
-		4C9767BA22A7AEF400A9BDBA /* SSIDAndPhoneIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSIDAndPhoneIP.m; sourceTree = "<group>"; };
 		4C9767BB22A7AEF400A9BDBA /* WiFiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiFiManager.h; sourceTree = "<group>"; };
-		4C9767BC22A7AEF500A9BDBA /* SSIDAndPhoneIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSIDAndPhoneIP.h; sourceTree = "<group>"; };
 		4C9767BE22A7AEF500A9BDBA /* WiFiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiFiManager.m; sourceTree = "<group>"; };
-		4C9767D322A8AFA300A9BDBA /* SJXCSMIPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJXCSMIPHelper.m; sourceTree = "<group>"; };
-		4C9767D422A8AFA300A9BDBA /* SJXCSMIPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJXCSMIPHelper.h; sourceTree = "<group>"; };
+		4C9767D322A8AFA300A9BDBA /* IPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPHelper.m; sourceTree = "<group>"; };
+		4C9767D422A8AFA300A9BDBA /* IPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPHelper.h; sourceTree = "<group>"; };
 		DE6EC0D21F905B68001FFBA3 /* Files.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Files.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE6EC0D51F905B68001FFBA3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DE6EC0D61F905B68001FFBA3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -150,10 +147,8 @@
 				F334C4F71FC6B45200FFEFD3 /* MoreViewController.m */,
 				4C9767BB22A7AEF400A9BDBA /* WiFiManager.h */,
 				4C9767BE22A7AEF500A9BDBA /* WiFiManager.m */,
-				4C9767D422A8AFA300A9BDBA /* SJXCSMIPHelper.h */,
-				4C9767D322A8AFA300A9BDBA /* SJXCSMIPHelper.m */,
-				4C9767BC22A7AEF500A9BDBA /* SSIDAndPhoneIP.h */,
-				4C9767BA22A7AEF400A9BDBA /* SSIDAndPhoneIP.m */,
+				4C9767D422A8AFA300A9BDBA /* IPHelper.h */,
+				4C9767D322A8AFA300A9BDBA /* IPHelper.m */,
 				4C41232C226571DB00C9F4E9 /* MoreTableViewCell.h */,
 				4C41232D226571DB00C9F4E9 /* MoreTableViewCell.m */,
 				4C41232E226571DB00C9F4E9 /* MoreTableViewCell.xib */,
@@ -310,11 +305,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C9767C022A7AEF500A9BDBA /* SSIDAndPhoneIP.m in Sources */,
 				4C4123342265CCAC00C9F4E9 /* MessageView.m in Sources */,
 				DED1CCA41F905E5900AD8BB5 /* FileModel.m in Sources */,
 				DED1CCA31F905E5300AD8BB5 /* FileManager.m in Sources */,
-				4C9767D522A8AFA300A9BDBA /* SJXCSMIPHelper.m in Sources */,
+				4C9767D522A8AFA300A9BDBA /* IPHelper.m in Sources */,
 				4C41232F226571DB00C9F4E9 /* MoreTableViewCell.m in Sources */,
 				DE6EC0E51F905B68001FFBA3 /* main.m in Sources */,
 				DE6EC0D71F905B68001FFBA3 /* AppDelegate.m in Sources */,

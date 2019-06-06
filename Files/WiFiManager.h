@@ -1,9 +1,9 @@
 //
 //  WiFiManager.h
-//  iOSHttpServer
+//  Files
 //
-//  Created by ziv on 2017/2/9.
-//  Copyright © 2017年 ziv. All rights reserved.
+//  Created by Whde on 2019/04/16.
+//  Copyright © 2019年 Whde All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

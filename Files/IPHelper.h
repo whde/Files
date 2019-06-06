@@ -1,14 +1,14 @@
 //
-//  SJXCSMIPHelper.h
-//  LocalReader
+//  IPHelper.h
+//  Files
 //
-//  Created by shapp on 2017/7/24.
-//  Copyright © 2017年 sjx. All rights reserved.
+//  Created by Whde on 2019/04/16.
+//  Copyright © 2019年 Whde All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface SJXCSMIPHelper : NSObject
+@interface IPHelper : NSObject
 
 /** 获取ip地址 */
 + (NSString *)deviceIPAdress;
