@@ -12,13 +12,14 @@
 #import "MoreTableViewCell.h"
 #import "MsgView/MessageView.h"
 #import <QuickLook/QuickLook.h>
-#import "WiFiViewController.h"
+#import "WiFiManager.h"
 
 @interface MoreViewController () <UITableViewDelegate, UITableViewDataSource, UIDocumentInteractionControllerDelegate>
 @property (nonatomic, strong) NSMutableArray *files;
 @property (nonatomic, strong) FileManager *fileManager;
 @property (nonatomic, weak) UITableView *tv;
 @property (nonatomic, copy) NSString *homePath;
+@property (nonatomic, copy) NSString *wifi;
 @end
 
 @implementation MoreViewController {
@@ -54,6 +55,23 @@
 #pragma mark - tableView 代理数据源
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (self.wifi) {
+        return 45;
+    }
+    return 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UILabel *lb = [[UILabel alloc] init];
+    lb.textColor = [UIColor redColor];
+    lb.textAlignment = NSTextAlignmentCenter;
+    lb.font = [UIFont systemFontOfSize:13.0];
+    lb.numberOfLines = 0;
+    lb.text = self.wifi;
+    return lb;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -262,29 +280,44 @@
         tv.refreshControl = refreshControl;
     }
     self.tv = tv;
-
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAction)];
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeSystem];
     [btn setTitle:@"WiFi" forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(wifi) forControlEvents:UIControlEventTouchUpInside];
-    [btn sizeToFit];
-    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    self.navigationItem.leftBarButtonItem = item;
+    [btn addTarget:self action:@selector(wifi:) forControlEvents:UIControlEventTouchUpInside];
+    btn.frame = CGRectMake(0, 0, 80, 44);
+    btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    UIBarButtonItem * wiFiItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    UIBarButtonItem * addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAction)];
+    self.navigationItem.rightBarButtonItems = @[addItem, wiFiItem];
 }
 
-- (void)wifi {
-    WiFiViewController *wifiVC = [[WiFiViewController alloc] init];
-    [UIView transitionWithView:self.navigationController.view duration:0.3 options:UIViewAnimationOptionCurveLinear animations:^{
-        CATransition* transition = [CATransition animation];
-        transition.duration =0.0f;
-        transition.type = kCATransitionPush;
-        transition.subtype = kCATransitionFromLeft;
-        transition.timingFunction = [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionLinear];
-        [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-        [self.navigationController pushViewController:wifiVC animated:YES];
-    } completion:nil];
-
+- (void)wifi:(UIButton *)sender {
+    static WiFiManager *wifiManager = nil;
+    if ([sender.titleLabel.text isEqual:@"WiFi"]) {
+        wifiManager = [[WiFiManager alloc] init];
+        if ([wifiManager start]) {
+            [sender setTitle:@"关闭WiFi" forState:UIControlStateNormal];
+            self.wifi = [NSString stringWithFormat:@"网页输入这个地址\nhttp://%@:%@/", wifiManager.ip, wifiManager.port];
+            [self.tv reloadData];
+            __weak typeof(self) weakSelf = self;
+            [wifiManager setChanged:^{
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [strongSelf getAllFile];
+            }];
+        } else {
+            self.wifi = nil;
+            [self.tv reloadData];
+            [wifiManager setChanged:nil];
+        }
+    } else {
+        [sender setTitle:@"WiFi" forState:UIControlStateNormal];
+        [wifiManager stop];
+        wifiManager = nil;
+        self.wifi = nil;
+        [self.tv reloadData];
+        [wifiManager setChanged:nil];
+    }
 }
+
 
 - (void)getAllFile {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -306,10 +339,6 @@
     } else {
         NSLog(@"创建失败");
     }
-//    NSArray *resFiles = [self.fileManager searchDeepFile:@"的" folderPath:self.homePath];
-//    for (FileModel *file in resFiles) {
-//        NSLog(@"%@", file.name);
-//    }
 }
 
 - (void)cellLongPress:(UILongPressGestureRecognizer *)longRecognizer {

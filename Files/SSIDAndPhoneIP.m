@@ -89,7 +89,7 @@
     close(sockfd);
     
     NSString *deviceIP =@"";
-    
+    NSLog(@"%@", ips);
     for (int i=0; i < ips.count; i++) {
         if (ips.count >0) {
             deviceIP = [NSString stringWithFormat:@"%@",ips.lastObject];

@@ -1,0 +1,37 @@
+PODS:
+  - CocoaAsyncSocket (7.6.3)
+  - CocoaLumberjack (3.4.2):
+    - CocoaLumberjack/Default (= 3.4.2)
+    - CocoaLumberjack/Extensions (= 3.4.2)
+  - CocoaLumberjack/Default (3.4.2)
+  - CocoaLumberjack/Extensions (3.4.2):
+    - CocoaLumberjack/Default
+  - GCDWebServer (3.5.2):
+    - GCDWebServer/Core (= 3.5.2)
+  - GCDWebServer/Core (3.5.2)
+  - GCDWebServer/WebDAV (3.5.2):
+    - GCDWebServer/Core
+  - GCDWebServer/WebUploader (3.5.2):
+    - GCDWebServer/Core
+
+DEPENDENCIES:
+  - CocoaAsyncSocket
+  - CocoaLumberjack
+  - GCDWebServer (~> 3.0)
+  - GCDWebServer/WebDAV (~> 3.0)
+  - GCDWebServer/WebUploader (~> 3.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - CocoaAsyncSocket
+    - CocoaLumberjack
+    - GCDWebServer
+
+SPEC CHECKSUMS:
+  CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
+  CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
+  GCDWebServer: ead88cd14596dd4eae4f5830b8877c87c8728990
+
+PODFILE CHECKSUM: 12eb4a36203bc1c397d4c7bbd497f29c72089dbe
+
+COCOAPODS: 1.6.0.beta.2
